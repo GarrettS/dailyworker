@@ -33,9 +33,9 @@ python3 -m pip install selenium
 brew install chromedriver
 ```
 
-1.1 Install Python 3.11
+**1.1 Install Python 3.11**
 
-This script requires Python 3.11. It will fail under Python 3.12 due to Selenium or ChromeDriver compatibility issues.
+This script _requires_ Python 3.11. It will _fail_ under Python 3.12 due to Selenium or ChromeDriver compatibility issues.
 If you don’t already have Python 3.11, install it with Homebrew:
 ```
 brew install python@3.11
