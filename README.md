@@ -61,7 +61,7 @@ macOS requires this for scheduled, unattended runs.
 Add:
 
 * **Terminal** (if you’ll test manually)
-* **Python 3.11** (`/usr/local/bin/python3.11`)
+* **Python 3.11** (`/usr/local/bin/python3.11`) (⌘ + SHIFT + G)
 * **Google Chrome**
 * **chromedriver**
 
@@ -99,10 +99,10 @@ launchctl print gui/$(id -u)/com.[your_username].dailyworker
 macOS can wake automatically before your script runs:
 
 ```bash
-sudo pmset repeat wakeorpoweron MTWRFSU 06:25:00
+sudo pmset repeat wakeorpoweron MTWRFSU 07:55:00
 ```
 
-This wakes the system daily at 6:25 AM so the script can run at, say, 6:30 AM.
+This wakes the system daily at 7:55 AM so the script can run at, say, 8:00 AM.
 Adjust as needed. To view or clear:
 
 ```bash
