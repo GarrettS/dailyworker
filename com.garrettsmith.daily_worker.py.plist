@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- bootout first unloads any previous copy; bootstrap reloads it.
+
+$ launchctl bootout gui/501 ~/Library/LaunchAgents/com.garrettsmith.daily_worker.py.plist
+
+$ launchctl bootstrap gui/501 ~/Library/LaunchAgents/com.garrettsmith.daily_worker.py.plist
+
+$ launchctl list | grep run_daily_worker
+
+-->
+<plist version="1.0">
+<dict>
+    <!-- Label: unique name for LaunchAgent must 
+    match this filename, minus 'plist' extension -->
+    <key>Label</key>
+    <string>com.[your_username].daily_worker.py</string>
+
+    <!-- ProgramArguments: Python executable + script path -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/python3.11</string> <!-- Python path -->
+        <string>/Users/[your_username]/Scripts/run_daily_worker.py</string> <!-- Script path -->
+    </array>
+
+    <!-- Run daily at 8:00 AM -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>8</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    
+    <!-- Output logs -->
+    <key>StandardOutPath</key>
+    <string>/Users/[your_username]/Library/Logs/run_daily_worker.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/[your_username]/Library/Logs/run_daily_worker.err</string>
+
+<!-- for instant testing, use RunAtLoad -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <false/>
+  </dict>
+</plist>
