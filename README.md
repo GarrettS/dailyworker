@@ -31,7 +31,22 @@ python3 -m pip install selenium
 
 # Install ChromeDriver (version matching your Chrome)
 brew install chromedriver
+```
 
+1.1 Install Python 3.11
+
+This script requires Python 3.11. It will fail under Python 3.12 due to Selenium or ChromeDriver compatibility issues.
+If you don’t already have Python 3.11, install it with Homebrew:
+```
+brew install python@3.11
+```
+
+Then verify it’s available:
+```
+python3.11 --version
+```
+
+Make sure your plist file explicitly calls /usr/local/bin/python3.11.
 ### 2. Configuration 
 run_daily_worker.py → ~/Scripts/run_daily_worker.py
 
