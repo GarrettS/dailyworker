@@ -99,10 +99,10 @@ launchctl print gui/$(id -u)/com.[your_username].dailyworker
 macOS can wake automatically before your script runs:
 
 ```bash
-sudo pmset repeat wakeorpoweron MTWRFSU 07:55:00
+sudo pmset repeat wakeorpoweron MTWRFS 07:55:00
 ```
 
-This wakes the system daily at 7:55 AM so the script can run at, say, 8:00 AM.
+This wakes the system Mon-Sat at 7:55 AM so the script can run at 8:00 AM (they're closed Sundays).
 Adjust as needed. To view or clear:
 
 ```bash
