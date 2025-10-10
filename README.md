@@ -1,9 +1,3 @@
-Good catch. Those are exactly the kinds of operational details that make the difference between “this worked once for me” and “this works reliably every day.”
-
-Here’s a tightened, practical section set for the README, integrating those missing details:
-
----
-
 ## System Setup
 
 ### 1. Install Python 3.11
