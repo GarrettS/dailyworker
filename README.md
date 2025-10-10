@@ -1,86 +1,126 @@
-# dailyworker
-Mountain View Daily Worker Center — Form Automation
+Good catch. Those are exactly the kinds of operational details that make the difference between “this worked once for me” and “this works reliably every day.”
 
-# Daily Worker Automation
-
-This repository automates filling out the time-sensitive "daily worker" form using Python + Selenium and macOS LaunchAgents.
+Here’s a tightened, practical section set for the README, integrating those missing details:
 
 ---
 
-## Overview
+## System Setup
 
-- `run_daily_worker.py` – Python script that opens Chrome, navigates to the prefilled form URL, fills it automatically, and submits it.
-- `daily_worker.plist.template` – macOS LaunchAgent template to run the script automatically at a scheduled time (e.g., 8:00 AM).
-- Uses `chromedriver` to control Chrome via Selenium.
-- Designed for macOS, Intel or Apple Silicon.
+### 1. Install Python 3.11
 
-> ⚠️ Paths in the plist and script must be updated to match your own system.
-
----
-
-## Setup
-
-### 1. Install dependencies
+Python 3.12 fails with Selenium + Chrome on macOS.
+Install 3.11 with Homebrew:
 
 ```bash
-# Homebrew Python 3.11 is recommended
 brew install python@3.11
+```
 
-# Install Selenium
-python3 -m pip install selenium
+Check the path:
 
-# Install ChromeDriver (version matching your Chrome)
+```bash
+which python3.11
+```
+
+Use this path in the plist file.
+
+---
+
+### 2. Grant Full Disk Access
+
+macOS may block automated access to Chrome profiles unless Python has **Full Disk Access**.
+
+Go to:
+`System Settings → Privacy & Security → Full Disk Access`
+Add `/usr/local/bin/python3.11` (or the path from step 1). (⌘ + SHIFT + G)
+
+---
+
+### 3. ChromeDriver Path
+
+Install ChromeDriver via Homebrew:
+
+```bash
 brew install chromedriver
 ```
 
-**1.1 Install Python 3.11**
+Typical path:
+`/usr/local/bin/chromedriver`
 
-This script _requires_ Python 3.11. It will _fail_ under Python 3.12 due to Selenium or ChromeDriver compatibility issues.
-If you don’t already have Python 3.11, install it with Homebrew:
-```
-brew install python@3.11
-```
+Set this path in the Python file:
 
-Then verify it’s available:
-```
-python3.11 --version
+```python
+CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
 ```
 
-Make sure your plist file explicitly calls /usr/local/bin/python3.11.
-### 2. Configuration 
-run_daily_worker.py → ~/Scripts/run_daily_worker.py
+---
 
-daily_worker.plist.template → ~/Library/LaunchAgents/com.[your_username].daily_worker.py.plist
+### 4. LaunchAgent Configuration
 
-Replace `[your_username]` with your macOS username.
+The LaunchAgent runs the script automatically each morning.
 
-### 3. Editing the plist
-Open com.[your_username].daily_worker.py.plist and update:
+* Copy `daily_worker.plist.template` to:
 
-<key>ProgramArguments</key>
-<array>
-    <string>/usr/local/bin/python3.11</string> <!-- path to your Python -->
-    <string>/Users/[your_username]/Scripts/run_daily_worker.py</string>
-</array>
+```
+~/Library/LaunchAgents/com.[your_computer_username].daily_worker.plist
+```
 
-<key>Label</key>
-<string>com.[your_username].daily_worker.py</string>
+* Edit the file and set:
 
-(No need to adjust `<StartCalendarInterval>` hour/minute to your preferred time (daily worker center takes requests from 6:30 AM – 8:30 AM).)
+  * Your Python 3.11 path
+  * Full path to `run_daily_worker.py`
 
-### 5. Test Python Script Works
-Before relying on the scheduler:
+* Load it:
 
+```bash
+launchctl load ~/Library/LaunchAgents/com.[your_computer_username].daily_worker.plist
+launchctl start com.[your_computer_username].daily_worker
+```
+
+To verify:
+
+```bash
+launchctl list | grep daily_worker
+```
+
+To unload:
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.[your_computer_username].daily_worker.plist
+```
+
+---
+
+### 5. Scheduled Wake-Up
+
+LaunchAgents won’t run if the machine is asleep.
+To ensure the system is awake before the script runs, schedule a wake event with `pmset`. For example, if the script runs at 7:55 AM:
+
+```bash
+sudo pmset repeat wakeorpoweron MTWRFSU 07:55:00
+```
+
+This wakes the system five minutes before the form automation runs.
+
+---
+
+### 6. After Reboot
+
+* LaunchAgents **persist after reboot**, but the scheduled wake time does not if power was completely removed (e.g., Mac shut down vs. asleep).
+* You may need to re-run the `pmset` command if you fully shut down.
+* Check status with:
+
+```bash
+pmset -g sched
+```
+
+---
+
+### 7. Test the Script
+
+Run manually before relying on automation:
+
+```bash
 /usr/local/bin/python3.11 ~/Scripts/run_daily_worker.py
+```
 
-Ensure Chrome opens, fills, and submits the form as expected.
-
-### 6. Notes:
-
-`PREFILLED_URL` is defined in the Python script. You can edit it there for testing.
-
-Make sure Chrome can launch with the profile specified in user-data-dir.
-
-The system uses a new Chrome session each time, so caching doesn’t affect execution.
-
-If something goes wrong, check logs (~/Library/Logs/run_daily_worker.err) and make sure paths in plist/script match.
+Chrome should launch, fill out the form, and submit it.
