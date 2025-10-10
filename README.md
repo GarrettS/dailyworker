@@ -80,25 +80,18 @@ Each file begins with a comment indicating its expected location.
 
 ### 5. Load the LaunchAgent
 
-After editing the plist to point to the correct paths:
+After editing the plist to point to the correct paths, launch and unload with the following commands:
 
-```bash
-launchctl load ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
-launchctl start com.[your_username].dailyworker
 ```
-
-To check status:
-
-```bash
-launchctl list | grep dailyworker
-```
-
 To unload (disable):
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
 
-```bash
-launchctl unload ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
+To load (enable):
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
+
+To check if it’s running:
+launchctl print gui/$(id -u)/com.[your_username].dailyworker
 ```
-
 ---
 
 ### 6. Schedule system wake-up (optional but recommended)
