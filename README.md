@@ -11,8 +11,53 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 * Runs automatically on schedule each morning, even if you forget
 * Keeps Chrome open briefly so you can verify it (if testing manually)
 
+```
+┌─────────────────────────────────────────────────────────────┐
+│               macOS Power Management (pmset)                │
+│  Schedules wake at 07:55 with:                              │
+│  sudo pmset repeat wakeorpoweron MTWRFS 07:55:00            │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     launchd Scheduler                       │
+│  System-level process that loads user LaunchAgents at wake  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           LaunchAgent (daily_worker.plist)                  │
+│  Located in: ~/Library/LaunchAgents/                        │
+│  Defines Python path and script execution schedule          │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           Python Script (daily_worker.py)                   │
+│  Location: ~/Scripts/                                       │
+│  Uses: /usr/local/bin/python3.11                            │
+│  Builds form URL, launches Chrome, submits form via Selenium│
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   Chrome (Selenium)                         │
+│  Loads user profile: /Users/[YOUR_USERNAME]/ChromeProfile   │
+│  Submits Mountain View Day Worker Form                      │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           Day Worker Center System                          │
+│  Receives form submission                                   │
+│  Adds worker to daily queue                                 │
+│  Sends SMS with either: queue number or job detail          │
+└─────────────────────────────────────────────────────────────┘
+```
 ---
-
+Day Worker Center system records availability
+    ↓
+User later receives SMS when job assigned
 ## Setup
 
 ### 1. Install Python 3.11
