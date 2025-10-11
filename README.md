@@ -6,8 +6,7 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 
 ### What It Does
 
-* Opens the MV Daily Worker Google Form with your pre-filled data, 
-* and submits it.
+* Opens the MV Daily Worker Google Form with your pre-filled data, and submits it.
 * Runs automatically on schedule each morning, even if you forget
 * Keeps Chrome open briefly so you can verify it (if testing manually).
 
