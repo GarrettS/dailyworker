@@ -172,5 +172,3 @@ Chrome should open, load the form, and submit it.
 If it closes instantly, verify that the prefilled URL and Chrome profile path exist.
 
 ---
-
-Would you like me to generate the matching `run_daily_worker.py` and `.plist` templates (with inline location and setup comments) to go with this?
