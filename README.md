@@ -54,10 +54,6 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-Day Worker Center system records availability
-    ↓
-User later receives SMS when job assigned
-## Setup
 
 ### 1. Install Python 3.11
 
