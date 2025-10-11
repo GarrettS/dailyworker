@@ -100,7 +100,7 @@ macOS requires this for scheduled, unattended runs.
 **System Settings → Privacy & Security → Full Disk Access**
 Add:
 
-* **Terminal** (if you’ll test manually)
+* **Terminal** (to test manually)
 * **Python 3.11** (`/usr/local/bin/python3.11`) (⌘ + SHIFT + G)
 * **Google Chrome**
 * **chromedriver**
