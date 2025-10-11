@@ -49,7 +49,7 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 ┌─────────────────────────────────────────────────────────────┐
 │           Day Worker Center System                          │
 │  Receives form submission                                   │
-│  Adds worker to daily queue                                 │
+│  Adds worker to queue                                       │
 │  Sends SMS with either: queue number or job detail          │
 └─────────────────────────────────────────────────────────────┘
 ```
