@@ -1,7 +1,8 @@
 ## Mountain View Daily Worker Form Automation
 
 Automates submission of the Mountain View Day Worker Center's daily registration form for day laborers.
-The Mountain View Day Worker Center requires workers to sign up between fixed hours (e.g., 6:30–8:30 AM). Missing one day moves you to the back of the queue — often a 10-day wait.
+The Mountain View Day Worker Center requires workers to sign up daily between 6:30–8:30 AM. Missing one day moves you to the back of the queue — about a 12-day process to get to the front, if registering consistently every day.
+
 This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and submit it automatically each morning using a macOS **LaunchAgent**.
 
 ### What It Does
