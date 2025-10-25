@@ -131,7 +131,7 @@ To load (enable):
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
 
 To check if it’s running:
-launchctl print gui/$(id -u)/com.[your_username].dailyworker
+launchctl print gui/$(id -u)/com.[your_username].dailyworker.py
 ```
 ---
 
