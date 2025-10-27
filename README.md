@@ -42,7 +42,7 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   Chrome (Selenium)                         │
-│  Loads user profile: /Users/[YOUR_USERNAME]/ChromeProfile   │
+│  Loads user profile: /Users/<em>[YOUR_USERNAME]</em>/ChromeProfile   │
 │  Submits Mountain View Day Worker Form                      │
 └─────────────────────────────────────────────────────────────┘
                             │
