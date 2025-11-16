@@ -5,6 +5,50 @@ Automates the early-morning submission of a prefilled Google Form used by the Da
 The Center changes their form frequently and without notice — fields appear, disappear, or suddenly become *required*.  
 This script submits at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
 
+```
+┌─────────────────────────────────────────────────────────────┐
+│               macOS Power Management (pmset)                │
+│  Schedules wake at 07:55 with:                              │
+│  sudo pmset repeat wakeorpoweron MTWRFS 06:59:00            │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     launchd Scheduler                       │
+│  System-level process that loads user LaunchAgents at wake  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           LaunchAgent (daily_worker.plist)                  │          
+│ Schedules run_daily_worker.py @ 7:00 AM (post-launchd wake) │
+│  Located in: ~/Library/LaunchAgents/                        │
+│  Defines Python path and script execution schedule          │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           Python Script (run_daily_worker.py)               │
+│  Location: ~/Scripts/                                       │
+│  Uses: /usr/local/bin/python3.11                            │
+│  Builds form URL, launches Chrome, submits form via Selenium│
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   Chrome (Selenium)                         │
+│  Loads user profile: /Users/[YOUR_USERNAME]/ChromeProfile   │
+│  Submits Mountain View Day Worker Form                      │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│           Day Worker Center System                          │
+│  Receives form submission                                   │
+│  Adds worker to queue                                       │
+│  Sends SMS with either: queue number or job detail          │
+└─────────────────────────────────────────────────────────────┘
+```
 --- 
 
 ## Features
