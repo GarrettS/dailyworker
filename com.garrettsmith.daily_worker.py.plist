@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- bootout first unloads any previous copy; bootstrap reloads it.
+<!--
+Template LaunchAgent for the Daily Worker auto-form script.
 
-$ launchctl bootout gui/501 ~/Library/LaunchAgents/com.garrettsmith.daily_worker.py.plist
+Usage (replace [YOUR_USERNAME]):
 
-$ launchctl bootstrap gui/501 ~/Library/LaunchAgents/com.garrettsmith.daily_worker.py.plist
+    cp launchd/com.example.dailyworker.plist \
+       ~/Library/LaunchAgents/com.[YOUR_USERNAME].daily_worker.py.plist
 
-$ launchctl list | grep run_daily_worker
+    # Edit the copied file:
+    #   - Set Label
+    #   - Set ProgramArguments python path and script path
+    #   - Set Hour/Minute as desired
+
+Then:
+
+    launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.[YOUR_USERNAME].daily_worker.py.plist 2>/dev/null || true
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.[YOUR_USERNAME].daily_worker.py.plist
 
 -->
 <plist version="1.0">
-<dict>
-    <!-- Label: unique name for LaunchAgent must 
-    match this filename, minus 'plist' extension -->
+  <dict>
     <key>Label</key>
-    <string>com.[your_username].daily_worker.py</string>
+    <string>com.YOUR_USERNAME.daily_worker.py</string>
 
-    <!-- ProgramArguments: Python executable + script path -->
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/python3.11</string> <!-- Python path -->
-        <string>/Users/[your_username]/Scripts/run_daily_worker.py</string> <!-- Script path -->
+      <!-- Adjust Python path and repo path for your system -->
+      <string>/usr/local/bin/python3.11</string>
+      <string>/Users/YOUR_USERNAME/Projects/dailyworker/run_daily_worker.py</string>
     </array>
 
-    <!-- Run daily at 8:00 AM -->
     <key>StartCalendarInterval</key>
     <dict>
-        <key>Hour</key>
-        <integer>8</integer>
-        <key>Minute</key>
-        <integer>0</integer>
+      <key>Hour</key>
+      <integer>7</integer>
+      <key>Minute</key>
+      <integer>0</integer>
     </dict>
-    
-    <!-- Output logs -->
-    <key>StandardOutPath</key>
-    <string>/Users/[your_username]/Library/Logs/run_daily_worker.log</string>
-    <key>StandardErrorPath</key>
-    <string>/Users/[your_username]/Library/Logs/run_daily_worker.err</string>
 
-<!-- for instant testing, use RunAtLoad -->
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_USERNAME/Library/Logs/run_daily_worker.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_USERNAME/Library/Logs/run_daily_worker.err</string>
+
+    <!-- For testing: run immediately on load
+         Remove or set to false in final use -->
     <key>RunAtLoad</key>
     <true/>
 
     <key>KeepAlive</key>
-    <false/>
+    <true/>
   </dict>
 </plist>

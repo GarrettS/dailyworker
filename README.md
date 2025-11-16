@@ -1,5 +1,6 @@
-## Mountain View Daily Worker Form Automation
+# DailyWorker Automation
 
+<<<<<<< HEAD
 Automates submission of the Mountain View Day Worker Center's daily registration form for day laborers.
 The Mountain View Day Worker Center requires workers to sign up daily between 6:30–8:30 AM. Missing one day moves you to the back of the queue — about a 12-day process to get to the front, if registering consistently every day.
 
@@ -10,6 +11,12 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 * Opens the MV Daily Worker Google Form with your pre-filled data, and submits it.
 * Runs automatically on schedule each morning, even if you forget
 * Keeps Chrome open briefly so you can verify it (if testing manually).
+=======
+Automates the early-morning submission of a prefilled Google Form used by the Day Worker Center.
+
+The Center changes their form frequently and without notice — fields appear, disappear, or suddenly become *required*.  
+This script submits at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
+>>>>>>> dff0f52 (robustify & modularize)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -56,44 +63,118 @@ This script uses **Selenium + ChromeDriver** to open Chrome, fill the form, and 
 ```
 ---
 
+<<<<<<< HEAD
 ### 1. Install Python 3.11
+=======
+## Features
 
-Python 3.12 fails with Selenium and LaunchAgents.
-Install 3.11 via Homebrew:
+- Automatic daily submission using macOS `launchd`
+- Uses your real Chrome profile (Google login preserved)
+- Detects surprise *required* fields and fixes them:
+  - Required **radio groups** → selects “No”
+  - Required **text inputs** → types `"OK"`
+- Captures screenshot + HTML after each run
+- Logs every submission (with automatic truncation)
+- Optional notifications:
+  - macOS Notification Center
+  - iMessage
+  - Email (Apple Mail)
+- Keeps Chrome open on failure for inspection
+>>>>>>> dff0f52 (robustify & modularize)
+
+---
+
+## Requirements
+
+- macOS  
+- Python 3.11+  
+- Chrome + matching ChromeDriver  
+- AppleScript enabled (for notifications)
+
+---
+
+## Installation
+
+Clone the repo:
 
 ```bash
-brew install python@3.11
+git clone https://github.com/GarrettS/dailyworker.git
+cd dailyworker
 ```
 
-Then confirm with:
+Create a venv:
 
 ```bash
-/usr/local/bin/python3.11 --version
+python3.11 -m venv venv
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-### 2. Install dependencies
+## Project Structure
 
-```bash
-pip3.11 install selenium
-brew install chromedriver
+```
+dailyworker/
+    dailyworker/
+        __init__.py
+        config.py
+        main.py
+        submitform.py
+        notify.py
+        logging.py
+    launchagent/
+        com.dailyworker.autosubmit.plist
+    run_daily_worker.py
+    README.md
 ```
 
-Find your `chromedriver` path with:
+### Module overview
 
-```bash
-which chromedriver
+- **config.py** — All user-editable settings  
+- **main.py** — Main workflow runner  
+- **submitform.py** — Submit logic and fallback handlers  
+- **notify.py** — macOS notification, iMessage, Apple Mail  
+- **logging.py** — Logging utilities + truncation  
+- **run_daily_worker.py** — Entry point used by `launchd`  
+- **launchagent plist** — Schedules the run at 7:00 AM  
+
+---
+
+## Configuration
+
+Edit:
+
+```
+dailyworker/dailyworker/config.py
 ```
 
-Use that in the Python file as:
+Example:
 
 ```python
+FORM_URL = "https://docs.google.com/forms/..."
+
+PROFILE_DIR = "/Users/YOUR_USER/ChromeProfile"
 CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
+LOGDIR = "/Users/YOUR_USER/Library/Logs/DailyWorker"
+
+SEND_IMESSAGE_TO = None
+SEND_EMAIL_TO    = None
+
+DEFAULT_REQUIRED_TEXT_ANSWER = "OK"
+DEBUG_KEEP_OPEN_ON_FAIL = True
 ```
+
+Keep personal phone numbers and emails **out of the repo**.
 
 ---
 
+<<<<<<< HEAD
 ### 3. Give Chrome and Python Full Disk Access
 
 macOS requires this for scheduled, unattended runs.
@@ -145,31 +226,136 @@ sudo pmset repeat wakeorpoweron MTWRFS 07:55:00
 
 This wakes the system Mon-Sat at 7:55 AM so the script can run at 8:00 AM (they're closed Sundays).
 Adjust as needed. To view or clear:
+=======
+## Manual Run
+
+```bash
+./run_daily_worker.py
+```
+
+Or:
+
+```bash
+python3 dailyworker/main.py
+```
+
+---
+
+## Setting up launchd
+
+Copy the LaunchAgent:
+
+```bash
+cp launchagent/com.dailyworker.autosubmit.plist ~/Library/LaunchAgents/
+```
+
+Load it:
+
+```bash
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dailyworker.autosubmit.plist
+```
+
+Check status:
+
+```bash
+launchctl print gui/$(id -u)/com.dailyworker.autosubmit
+```
+
+Unload:
+
+```bash
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.dailyworker.autosubmit.plist
+```
+
+---
+
+## macOS Wake Scheduling
+
+macOS supports **one** repeating wake schedule.
+
+Set:
+
+```bash
+sudo pmset repeat wakeorpoweron MTWRFS 06:59:00
+```
+
+Check:
+>>>>>>> dff0f52 (robustify & modularize)
 
 ```bash
 pmset -g sched
+```
+
+Clear:
+
+```bash
 sudo pmset repeat cancel
 ```
 
----
-
-### 7. Behavior on reboot
-
-LaunchAgents reload automatically after login.
-If you want it to run **before** login, you’d need a LaunchDaemon instead, but that runs as root and can’t access your Chrome user data.
-So: let the machine auto-login (System Settings → Users & Groups → Login Options).
+Every new `pmset repeat` replaces the previous one.
 
 ---
 
-### 8. Test manually
+## Logs & Evidence
 
-Run once in Terminal:
+Everything is stored in:
 
-```bash
-/usr/local/bin/python3.11 ~/Scripts/run_daily_worker.py
+```
+~/Library/Logs/DailyWorker/
 ```
 
-Chrome should open, load the form, and submit it.
-If it closes instantly, verify that the prefilled URL and Chrome profile path exist.
+You’ll see:
+
+- `daily_worker_status.log`
+- `daily_worker_YYYYMMDD-HHMMSS.html`
+- `daily_worker_YYYYMMDD-HHMMSS.png`
+
+Tail the log in real time:
+
+```bash
+tail -f ~/Library/Logs/DailyWorker/daily_worker_status.log
+```
+
+Logs auto-truncate when they exceed your configured size.
 
 ---
+<<<<<<< HEAD
+=======
+
+## Fallback Behavior
+
+If submission fails:
+
+1. Script identifies required fields Google added
+2. Auto-answers:
+   - Required radios → “No”
+   - Required text inputs → `"OK"`
+3. Attempts a second submission
+4. If it still fails:
+   - Chrome remains open
+   - Screenshot and HTML are saved
+   - Notifications are sent
+
+Running early gives you time to fix anything manually.
+
+---
+
+## Notes on Google Form Instability
+
+The Day Worker Center regularly:
+
+- Adds new required fields without notice  
+- Removes required flags shortly after  
+- Inserts malformed blocks  
+- Rearranges fieldsets
+
+This script is designed to absorb most of that chaos.
+
+Anything it can’t fix automatically is surfaced immediately to you with Chrome left open.
+
+---
+
+## License
+
+MIT License.
+>>>>>>> dff0f52 (robustify & modularize)
