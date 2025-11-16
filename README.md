@@ -1,6 +1,6 @@
 # DailyWorker Automation
 
-Automates the early-morning submission of a prefilled Google Form used by the Day Worker Center.
+Automates the early-morning submission of a prefilled Google Form used by the [Mountain View Day Worker Center](https://www.dayworkercentermv.org/).
 
 The Center changes their form frequently and without notice — fields appear, disappear, or suddenly become *required*.  
 This script submits at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
