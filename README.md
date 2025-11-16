@@ -1,9 +1,24 @@
 # DailyWorker Automation
 
-Automates the early-morning submission of a prefilled Google Form used by the [Mountain View Day Worker Center](https://www.dayworkercentermv.org/).
+Automates the early-morning submission of a prefilled Google Form used by the [Mountain View Day Worker Center](https://www.dayworkercentermv.org/), where workers like you can register to maintain a position in a queue with the hopes of doing labor for $25/hr.
 
-The Center changes their form frequently and without notice — fields appear, disappear, or suddenly become *required*.  
-This script submits at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
+## Problem
+What does the DailyWorker Automation solve?
+
+This script tries to submit the Day Worker Center (DWC) form at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
+
+## Context
+The Day Worker Center daily registration form uses a queue. When you the user declare availability, you are placed at the end of the queue. Each day, you will advance towards the front of the queue. To reach the front of the queue typically takes about three weeks of consistent daily registrations. You lose your place in the queue on one of two ways:
+1. Fail to register before being chosen to work
+2. Reaching the head of the queue, and staying there until you are chosen to work.
+
+If you are chosen to work by the DWC, you are dispatched to a job and taken out of the queue. If you fail to register for any day (if you missed it, forgot, etc), you will be taken out of the queue.
+
+For this reason, it is very important you *do not miss any registration days**, as that will take you out of the queue, and you will be taken out of the queue and have to start all over again.  
+
+The DWC advertises that they give jobs to skilled workers, but in my experience, they do not write this information down and generally do not care (if you have landscaping, moving, painting, or drywall experience, for example, they might not care).
+
+Your best bet to earn money is to register every day.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -251,6 +266,10 @@ Logs auto-truncate when they exceed your configured size.
 ---
 
 ## Fallback Behavior
+
+**WARNING:** The Center changes their form frequently and without notice with *required* fields that may appear and disappear. This script handles the unexpected but required fields with a dual-pronged approach:
+1. Re-submission with fallbacks
+2. Early 7:00 AM submission with SMS/email notice to you, so you have time to manually correct the error (and not be placed at the end of the queue).
 
 If submission fails:
 
