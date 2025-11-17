@@ -8,13 +8,17 @@ What does the DailyWorker Automation solve?
 This script tries to submit the Day Worker Center (DWC) form at **7:00 AM**, detects any failure, notifies you instantly, and keeps Chrome open so you can fix issues before the 8:30 AM cutoff.
 
 ## Context
-The Day Worker Center daily registration form uses a queue. You, the user, declare availability by filling out the [daily worker form](https://docs.google.com/forms/d/e/1FAIpQLSdYGfA0gaqJBTvqOeprVJLp-NU2B6GGqjamXAbfmQI0_oJWFg/viewform?pli=1&pli=1). The center receives the form submission and updates your position in the queue. Each day, you be given a chance to fill out this form and, upon completeion, will be advanced towards the front of the queue. Reaching the front of the queue typically takes about three weeks of consistent daily registrations. You will lose your place in the queue by one of the folllowing two ways:
+The Day Worker Center daily registration form uses a queue. You, the user, declare your availability each day by filling out the [daily worker form](https://docs.google.com/forms/d/e/1FAIpQLSdYGfA0gaqJBTvqOeprVJLp-NU2B6GGqjamXAbfmQI0_oJWFg/viewform?pli=1&pli=1). 
+
+The center receives the form submission and sets or advances your position in the queue. Each day, you be given a chance to fill out this form and, upon completeion, will be advanced towards the front of the queue. Reaching the front of the queue typically takes about three weeks of consistent daily registrations. You will lose your place in the queue by one of the folllowing two ways:
 1. Failing to register before being chosen to work
 2. Reaching the head of the queue, and staying there until you are chosen to work.
 
-If you are chosen to work by the DWC, you are dispatched to a job and taken out of the queue. If you fail to register for any day (if you missed it, forgot, etc), you will be taken out of the queue.
+If you are chosen to work by the DWC, you are dispatched to a job and taken out of the queue. If you fail to register for any day (if you missed it, forgot, etc), you will be taken out of the queue. 
 
-For this reason, it is very important you *do not miss any registration days**, as that will take you out of the queue, and you will be taken out of the queue and have to start all over again.  
+For this reason, it is very important you *do not miss any registration days*, as that will take you out of the queue, and you will have to start all over again. 
+
+It is also important to make it to the job site on time, as failure to do so may result in loss of that job.
 
 The DWC advertises that they give jobs to skilled workers, but in my experience, they do not care (if you have landscaping, moving, painting, or drywall experience, for example, they might not care).
 
