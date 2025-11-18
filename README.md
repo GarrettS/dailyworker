@@ -75,7 +75,7 @@ Your best bet to earn money is to register every day.
 - Automatic daily submission using macOS `launchd`
 - Uses your real Chrome profile (Google login preserved)
 - Detects surprise *required* fields and fixes them:
-  - Required **radio groups** → selects “No”
+  - Required **radio groups** → tries to find &amp; select field labeled `No`
   - Required **text inputs** → types `"OK"`
 - Captures screenshot + HTML after each run
 - Logs every submission (with automatic truncation)
@@ -277,7 +277,7 @@ Logs auto-truncate when they exceed your configured size.
 
 If submission fails:
 
-1. Script identifies required fields Google added
+1. Script identifies surprise required fields
 2. Auto-answers:
    - Required radios → “No”
    - Required text inputs → `"OK"`
