@@ -22,7 +22,10 @@ It is also important to make it to the job site on time, as failure to do so may
 
 The DWC advertises that they give jobs to skilled workers, but in my experience, they do not care (if you have landscaping, moving, painting, or drywall experience, for example, they might not care).
 
-Your best bet to earn money is to register every day.
+The day worker center checks their submissions at least twice per morning, which means that earlier submissions will result in lower numbers. For submissions received at 7:00 AM, they will respond almost immediately with a queue number.
+
+Your best bet to earn money is to register every day at or before 7:00 AM.
+![daily worker center messages](center-text-messages.png)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
