@@ -1,8 +1,3 @@
-> If you want, I can fold the micro-delay code into your submit_and_verify() to target 06:30:00.250 explicitly, which guarantees:
-
-No, i'm within the rule. I just need to update the README.md:
-
-```
 # DailyWorker Automation
 
 Automates the early-morning submission of a prefilled Google Form used by the [Mountain View Day Worker Center](https://www.dayworkercentermv.org/)(DWC), where workers like you can register to maintain a position in a queue with the hopes of doing labor for $25/hr.
@@ -270,10 +265,10 @@ launchctl print gui/$(id -u)/com.[your_username].dailyworker
 macOS can wake automatically before your script runs:
 
 ```bash
-sudo pmset repeat wakeorpoweron MTWRFSU 06:25:00
+sudo pmset repeat wakeorpoweron MTWRFSU 06:59:30
 ```
 
-This wakes the system daily at 6:25 AM so the script can run at, say, 6:30 AM.
+This wakes the system daily at 6:59 AM so the script can run at, say, 7:00 AM.
 Adjust as needed. To view or clear:
 
 ```bash
