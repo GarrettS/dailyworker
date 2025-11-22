@@ -1,3 +1,8 @@
+> If you want, I can fold the micro-delay code into your submit_and_verify() to target 06:30:00.250 explicitly, which guarantees:
+
+No, i'm within the rule. I just need to update the README.md:
+
+```
 # DailyWorker Automation
 
 Automates the early-morning submission of a prefilled Google Form used by the [Mountain View Day Worker Center](https://www.dayworkercentermv.org/)(DWC), where workers like you can register to maintain a position in a queue with the hopes of doing labor for $25/hr.
@@ -226,7 +231,7 @@ macOS requires this for scheduled, unattended runs.
 **System Settings → Privacy & Security → Full Disk Access**
 Add:
 
-* **Terminal** (if you’ll test manually)
+* **Terminal** (if testing manually)
 * **Python 3.11** (`/usr/local/bin/python3.11`)
 * **Google Chrome**
 * **chromedriver**
@@ -255,7 +260,7 @@ launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.[your_username].dailyw
 To load (enable):
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.[your_username].dailyworker.plist
 
-To check if it’s running:
+To check if it's running:
 launchctl print gui/$(id -u)/com.[your_username].dailyworker
 ```
 ---
@@ -281,7 +286,7 @@ sudo pmset repeat cancel
 ### 7. Behavior on reboot
 
 LaunchAgents reload automatically after login.
-If you want it to run **before** login, you’d need a LaunchDaemon instead, but that runs as root and can’t access your Chrome user data.
+If you want it to run **before** login, you'd need a LaunchDaemon instead, but that runs as root and can't access your Chrome user data.
 So: let the machine auto-login (System Settings → Users & Groups → Login Options).
 
 ---
@@ -376,7 +381,7 @@ Everything is stored in:
 ~/Library/Logs/DailyWorker/
 ```
 
-You’ll see:
+You'll see:
 
 - `daily_worker_status.log`
 - `daily_worker_YYYYMMDD-HHMMSS.html`
@@ -402,7 +407,7 @@ If submission fails:
 
 1. Script identifies surprise required fields
 2. Auto-answers:
-   - Required radios → “No”
+   - Required radios → "No"
    - Required text inputs → `"OK"`
 3. Attempts a second submission
 4. If it still fails:
@@ -425,10 +430,11 @@ The Day Worker Center regularly:
 
 This script is designed to absorb most of that chaos.
 
-Anything it can’t fix automatically is surfaced immediately to you with Chrome left open.
+Anything it can't fix automatically is surfaced immediately to you with Chrome left open.
 
 ---
 
 ## License
 
 MIT License.
+```
